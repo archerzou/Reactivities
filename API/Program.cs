@@ -8,9 +8,15 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddCors();
+
 WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseCors(options => 
+    options.AllowAnyMethod().AllowAnyHeader()
+    .WithOrigins("http://localhost:3000", "https://localhost:3000"));
+
 app.MapControllers();
 
 using IServiceScope scope = app.Services.CreateScope();
