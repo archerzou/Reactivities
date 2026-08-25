@@ -5,6 +5,8 @@
   <!--.NET 10 packages. Most of them will work on .NET 8/9. If you need to, make the updates here individually.-->
   <ItemGroup>
     <!-- Static code analysis -->
+    <PackageVersion Include="AutoMapper" Version="16.2.0" />
+    <PackageVersion Include="MediatR" Version="14.2.0" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.11" />
     <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.27.0.140913" />
     <!-- Application -->
