@@ -1,30 +1,24 @@
-import { Box, CssBaseline } from "@mui/material";
-import { useState, useEffect } from "react";
+import { Box, Container, CssBaseline } from "@mui/material";
 import NavBar from "./NavBar";
-import axios from "axios";
-function App() {
-  const [activities, setActivities] = useState<Activity[]>([]);
+import { Outlet, ScrollRestoration } from "react-router";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-  useEffect(() => {
-    axios.get<Activity[]>("https://localhost:5001/api/activities")
-        .then(response => setActivities(response.data))
-      
-      return () => {}
-  }, []);
-  
-  return (
-      <Box sx={{ bgcolor: '#eeeeee', minHeight: '100vh' }}>
-          <CssBaseline />
-              <>
-                  <NavBar />
-                  <ul>
-                      {activities.map((activity) => (
-                          <li key={activity.id}>{activity.title}</li>
-                      ))}
-                  </ul>
-              </>
-      </Box>
-  )
+function App() {
+    // const location = useLocation();
+    return (
+        <Box sx={{ bgcolor: '#eeeeee', minHeight: '100vh' }}>
+            <ScrollRestoration />
+            <CssBaseline />
+            <ToastContainer position="bottom-right" hideProgressBar theme="colored" />
+            <>
+                    <NavBar />
+                    <Container maxWidth='xl' sx={{ pt: 14 }}>
+                        <Outlet />
+                    </Container>
+            </>
+        </Box>
+    )
 }
 
 export default App
