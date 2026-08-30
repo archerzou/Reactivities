@@ -1,8 +1,7 @@
 ﻿import { createBrowserRouter } from "react-router";
 import App from "../layout/App";
 import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
-// import ActivityForm from "../../features/activities/form/ActivitityForm";
-// import HomePage from "../../features/home/HomePage";
+import ActivityForm from "../../features/activities/form/ActivitityForm";
 import ActivityDetailsPage from "../../features/activities/details/ActivityDetailsPage";
 // import Counter from "../../features/counter/Counter";
 // import TestErrors from "../../features/errors/TestError";
@@ -23,9 +22,9 @@ export const router = createBrowserRouter([
         path: "/",
         element: <App />,
         children: [
-            { index: true, element: <ActivityDashboard /> },
             { path: 'activities', element: <ActivityDashboard /> },
             { path: 'activities/:id', element: <ActivityDetailsPage /> },
+            { path: 'createActivity', element: <ActivityForm key='create' /> },
         ]
     },
 ]);

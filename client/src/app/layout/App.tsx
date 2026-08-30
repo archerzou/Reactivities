@@ -1,22 +1,21 @@
 import { Box, Container, CssBaseline } from "@mui/material";
 import NavBar from "./NavBar";
-import { Outlet, ScrollRestoration } from "react-router";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
+import { Outlet, ScrollRestoration, useLocation } from "react-router";
+import HomePage from "../../features/home/HomePage";
 function App() {
-    // const location = useLocation();
+    const location = useLocation();
     return (
         <Box sx={{ bgcolor: '#eeeeee', minHeight: '100vh' }}>
             <ScrollRestoration />
             <CssBaseline />
-            <ToastContainer position="bottom-right" hideProgressBar theme="colored" />
-            <>
+            {location.pathname === '/' ? <HomePage /> : (
+                <>
                     <NavBar />
                     <Container maxWidth='xl' sx={{ pt: 14 }}>
                         <Outlet />
                     </Container>
-            </>
+                </>
+            )}
         </Box>
     )
 }
