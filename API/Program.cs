@@ -25,8 +25,8 @@ builder.Services.AddAutoMapper(cfg =>
 WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
-app.UseCors(options => 
-    options.AllowAnyMethod().AllowAnyHeader()
+app.UseCors(options =>
+    options.AllowAnyMethod().AllowAnyHeader().AllowCredentials()
     .WithOrigins("http://localhost:3000", "https://localhost:3000"));
 
 app.MapControllers();

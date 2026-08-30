@@ -1,0 +1,30 @@
+﻿import { createBrowserRouter } from "react-router";
+import App from "../layout/App";
+import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
+import ActivityForm from "../../features/activities/form/ActivitityForm";
+import ActivityDetailsPage from "../../features/activities/details/ActivityDetailsPage";
+// import Counter from "../../features/counter/Counter";
+// import TestErrors from "../../features/errors/TestError";
+// import NotFound from "../../features/errors/NotFound";
+// import ServerError from "../../features/errors/ServerError";
+// import LoginForm from "../../features/account/LoginForm";
+// import RequireAuth from "./RequireAuth";
+// import RegisterForm from "../../features/account/RegisterForm";
+// import ProfilePage from "../../features/profiles/ProfilePage";
+// import VerifyEmail from "../../features/account/VerifyEmail";
+// import ChangePasswordForm from "../../features/account/ChangePasswordForm";
+// import ForgotPasswordForm from "../../features/account/ForgotPasswordForm";
+// import ResetPasswordForm from "../../features/account/ResetPasswordForm";
+// import AuthCallback from "../../features/account/AuthCallback";
+
+export const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <App />,
+        children: [
+            { path: 'activities', element: <ActivityDashboard /> },
+            { path: 'activities/:id', element: <ActivityDetailsPage /> },
+            { path: 'createActivity', element: <ActivityForm key='create' /> },
+        ]
+    },
+]);
