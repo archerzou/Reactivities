@@ -3,7 +3,7 @@ import App from "../layout/App";
 import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
 import ActivityForm from "../../features/activities/form/ActivitityForm";
 import ActivityDetailsPage from "../../features/activities/details/ActivityDetailsPage";
-// import Counter from "../../features/counter/Counter";
+import Counter from "../../features/counter/Counter";
 // import TestErrors from "../../features/errors/TestError";
 // import NotFound from "../../features/errors/NotFound";
 // import ServerError from "../../features/errors/ServerError";
@@ -27,4 +27,5 @@ export const router = createBrowserRouter([
             { path: 'createActivity', element: <ActivityForm key='create' /> },
         ]
     },
+    { path: 'counter', element: <Counter /> },
 ]);
