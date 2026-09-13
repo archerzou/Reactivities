@@ -1,5 +1,7 @@
 using Application.Activities.Queries;
 using Application.Core;
+using Application.Validators;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -21,6 +23,8 @@ builder.Services.AddAutoMapper(cfg =>
 {
     cfg.LicenseKey = builder.Configuration["Licences:MediatR"];
 }, typeof(MappingProfiles));
+
+builder.Services.AddValidatorsFromAssemblyContaining<CreateActivityValidator>();
 
 WebApplication app = builder.Build();
 
