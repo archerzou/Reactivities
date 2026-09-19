@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Application.Core;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -13,4 +14,18 @@ public class BaseApiController: ControllerBase
         _mediator ??= HttpContext.RequestServices.GetService<IMediator>() 
                       ?? throw new InvalidOperationException("IMediator service is not available.");
 
+    protected ActionResult HandleResult<T>(Result<T> result)
+    {
+        if (result.IsSuccess && result.Value is not null)
+        {
+            return Ok(result.Value);
+        }
+
+        if (!result.IsSuccess && result.Code == 404)
+        {
+            return NotFound();
+        }
+
+        return BadRequest(result.Error);
+    }
 }

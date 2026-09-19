@@ -1,3 +1,4 @@
+using API.Middleware;
 using Application.Activities.Queries;
 using Application.Core;
 using Application.Validators;
@@ -16,6 +17,7 @@ builder.Services.AddCors();
 builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssemblyContaining<GetActivityList.Handler>();
+    cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
     cfg.LicenseKey = builder.Configuration["Licences:MediatR"];
 });
 
@@ -25,10 +27,12 @@ builder.Services.AddAutoMapper(cfg =>
 }, typeof(MappingProfiles));
 
 builder.Services.AddValidatorsFromAssemblyContaining<CreateActivityValidator>();
+builder.Services.AddTransient<ExceptionMiddleware>();
 
 WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseCors(options =>
     options.AllowAnyMethod().AllowAnyHeader().AllowCredentials()
     .WithOrigins("http://localhost:3000", "https://localhost:3000"));
