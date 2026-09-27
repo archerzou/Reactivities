@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Text.Json;
 using Application.Core;
 using FluentValidation;
@@ -8,8 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Middleware;
 
-public class ExceptionMiddleware: IMiddleware
+public class ExceptionMiddleware(IHostEnvironment env, ILogger<ExceptionMiddleware> logger): IMiddleware
 {
+    private static readonly JsonSerializerOptions _jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
         try
@@ -22,27 +23,24 @@ public class ExceptionMiddleware: IMiddleware
         }
         catch (Exception ex)
         {
-            // await HandleException(context, ex);
-            Console.WriteLine(ex.Message);
+            await HandleException(context, ex);
         }
     }
 
-    // private async Task HandleException(HttpContext context, Exception ex)
-    // {
-    //     logger.LogError(ex, ex.Message);
-    //     context.Response.ContentType = "application/json";
-    //     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-    //
-    //     var response = env.IsDevelopment()
-    //         ? new AppException(context.Response.StatusCode, ex.Message, ex.StackTrace?.ToString())
-    //         : new AppException(context.Response.StatusCode, "Internal Server Error", null);
-    //
-    //     var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-    //
-    //     var json = JsonSerializer.Serialize(response, options);
-    //
-    //     await context.Response.WriteAsync(json);
-    // }
+    private async Task HandleException(HttpContext context, Exception ex)
+    {
+        logger.LogError(ex, "{Message}", ex.Message);
+        context.Response.ContentType = "application/json";
+        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+    
+        AppError response = env.IsDevelopment()
+            ? new AppError(context.Response.StatusCode, ex.Message, ex.StackTrace?.ToString())
+            : new AppError(context.Response.StatusCode, "Internal Server Error", null);
+    
+        string json = JsonSerializer.Serialize(response, _jsonOptions);
+    
+        await context.Response.WriteAsync(json);
+    }
 
     private static async Task HandleValidationException(HttpContext context, ValidationException ex)
     {
