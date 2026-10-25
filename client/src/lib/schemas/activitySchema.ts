@@ -5,7 +5,8 @@ export const activitySchema = z.object({
     title: requiredString('Title'),
     description: requiredString('Description'),
     category: requiredString('Category'),
-    date: z.coerce.date({error: 'Date is required'}),
+    date: z.coerce.date({error: 'Date is required'})
+        .refine(d => d > new Date(), {error: 'Date must be in the future'}),
     location: z.object({
         venue: requiredString('Venue'),
         city: z.string(),
