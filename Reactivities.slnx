@@ -7,5 +7,6 @@
   <Project Path="API/API.csproj" />
   <Project Path="Application/Application.csproj" />
   <Project Path="Domain/Domain.csproj" />
+  <Project Path="Infrastructure/Infrastructure.csproj" Id="5f4ce378-d3ab-43bc-9a73-0bb167e3d182" />
   <Project Path="Persistence/Persistence.csproj" />
 </Solution>
