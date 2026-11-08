@@ -1,9 +1,11 @@
 using API.Middleware;
 using Application.Activities.Queries;
 using Application.Core;
+using Application.Interfaces;
 using Application.Validators;
 using Domain;
 using FluentValidation;
+using Infrastructure.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -29,6 +31,8 @@ builder.Services.AddMediatR(cfg =>
     cfg.LicenseKey = builder.Configuration["Licences:MediatR"];
 });
 
+builder.Services.AddScoped<IUserAccessor, UserAccessor>();
+
 builder.Services.AddAutoMapper(cfg =>
 {
     cfg.LicenseKey = builder.Configuration["Licences:MediatR"];
@@ -43,6 +47,15 @@ builder.Services.AddIdentityApiEndpoints<User>(opt =>
     })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>();
+
+builder.Services.AddAuthorization(opt =>
+{
+    opt.AddPolicy("IsActivityHost", policy =>
+    {
+        policy.Requirements.Add(new IsHostRequirement());
+    });
+});
+builder.Services.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
 
 WebApplication app = builder.Build();
 
