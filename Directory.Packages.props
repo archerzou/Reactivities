@@ -5,7 +5,8 @@
   <!--.NET 10 packages. Most of them will work on .NET 8/9. If you need to, make the updates here individually.-->
   <ItemGroup>
     <!-- Static code analysis -->
-    <PackageVersion Include="AutoMapper" Version="16.2.0" />
+    <PackageVersion Include="AutoMapper" Version="16.3.0" />
+    <PackageVersion Include="CloudinaryDotNet" Version="1.29.3" />
     <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
     <PackageVersion Include="MediatR" Version="14.2.0" />
     <PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.2" />
