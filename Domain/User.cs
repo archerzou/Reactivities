@@ -10,7 +10,7 @@ public class User : IdentityUser
 
     // navigation properties
     public ICollection<ActivityAttendee> Activities { get; set; } = new List<ActivityAttendee>();
-    //public ICollection<Photo> Photos { get; set; } = [];
+    public ICollection<Photo> Photos { get; set; } = [];
     //public ICollection<UserFollowing> Followings { get; set; } = [];
     //public ICollection<UserFollowing> Followers { get; set; } = [];
 }
